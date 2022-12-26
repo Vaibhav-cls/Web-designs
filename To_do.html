@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/839/839860.png">
+    <title>To-Do</title>
+    <style>
+        *{
+    margin: 0;
+    padding:0;
+    box-sizing: border-box;
+}
+body{
+    padding: 20px;
+    justify-content: center;
+    align-items: center;
+    background-size: contain;
+    background-image: url("https://www.hdwallpapers.in/download/white_leaves_branches_white_background_hd_white_background-HD.jpg");
+    background-color: #8D5CAD;
+}
+h1{
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 700;
+    font-size: 50px;
+    text-align: center;
+    padding-bottom: 20px;
+    color:rgb(65, 44, 18);
+}
+.header .memo{
+
+    display: flex;
+    margin: auto;
+    justify-content: center;
+    align-items: center;
+    width: 35%;
+    padding-bottom: 20px;
+}
+.header{
+    padding-top: 10px;
+    padding-bottom: 20px;
+    min-width: 527px;
+    width: 80%;
+    margin: auto;
+    -webkit-box-shadow: 10px 10px 79px -4px rgba(15,153,130,1);
+    -moz-box-shadow: 10px 10px 79px -4px rgba(15,153,130,1);
+    box-shadow: 10px 10px 79px -4px rgba(15,153,130,1);
+    transition: 0.2s;  
+    background-image: linear-gradient(to right top, #00fffd, #45f6ff, #87eaff, #b9ddff, #d8d2ff);  
+}
+.header .memo .input{
+    padding: 4px 12px;
+    margin: auto;
+    background: none;
+    font-size: 20px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color: rgba(4, 61, 116, 0.993);
+    border: none;
+    border-bottom: 1px solid rgba(87, 87, 87, 0.562);
+    transition: 0.3s border;
+}
+.header .memo .input:hover{
+    border-bottom: 2px solid rgb(58, 58, 58);
+}
+.input::placeholder{
+    color: rgba(4, 61, 116, 0.993);
+}
+.add{
+    font-size: 30px;
+    text-align: center;
+    cursor: pointer;
+    background-color: grey;
+    padding: 0.1px 10px;
+    transition: 0.2s background-color;
+}
+.add:hover{
+    background-color: rgb(255, 115, 0);
+    color: #fff;
+}
+
+ul li {
+    cursor: pointer;
+    position: relative;
+    margin: auto;
+    width: 400px;
+    padding: 12px 8px 12px 40px;
+    list-style-type: none;
+    font-size: 18px;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    transition: 0.3s background-color;
+  }
+  ul li:hover{
+    background-color: rgba(33, 168, 45, 0.63);
+  }
+ul li.checked {
+    background: rgb(4, 92, 17);
+    color: rgb(169, 180, 14);
+    text-decoration: line-through;
+  }
+
+ul li.checked::before {
+    content: '';
+    position: absolute;
+    border-color: rgb(54, 240, 17);
+    border-style: solid;
+    border-width: 0 2px 2px 0;
+    top: 10px;
+    left: 16px;
+    transform: rotate(45deg);
+    height: 15px;
+    width: 7px;
+  }
+
+  .close {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 5px 12px 0px;
+    font-size: 35px;
+  }
+  
+  .close:hover {
+    background-color: #cc6109;
+    color: white;
+  }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Plan your day</h1>
+        <div class="memo">
+            <input type="text" class="input" id="input_task" placeholder="Enter your task...">
+            <span onclick="newitem()" class="add">+</span>
+        </div>
+        <ul id="list">
+            <li>Homework</li>
+            <li>Watch movie</li>
+        </ul>
+    </div>
+    <script>
+        let list_items = document.getElementsByTagName("LI");
+        let i;
+        for(i=0;i<list_items.length;i++)
+        {
+            let span = document.createElement("SPAN");
+            let text = document.createTextNode("\u00D7");
+            span.className = "close";
+            span.appendChild(text);
+            list_items[i].appendChild(span);
+        }
+        let exit = document.getElementsByClassName("close");
+        let j;
+        for(j=0;j<exit.length;j++)
+        {
+            exit[j].onclick = function()
+            {
+                let div = this.parentElement;
+                div.style.display = "none";
+            }
+        }
+        let check = document.querySelector('ul');
+        check.addEventListener('click', function(set){
+            if(set.target.tagName === 'LI'){
+                set.target.classList.toggle('checked')
+            } 
+        }, false);
+
+        function newitem()
+        {
+            let task = document.createElement("li");
+            let input_val = document.getElementById("input_task").value;
+            let t = document.createTextNode(input_val);
+            task.appendChild(t);
+            if(input_val === ''){
+                alert("Enter some task!");
+            }
+            else{
+                document.getElementById("list").appendChild(task);
+            }
+            let span = document.createElement("SPAN");
+            let text = document.createTextNode("\u00D7");
+            span.className = "close";
+            span.appendChild(text);
+            task.appendChild(span);
+            for(i=0;i<exit.length;i++) {
+                exit[i].onclick = function(){
+                    let div =this.parentElement;
+                    div.style.display = "none";
+                }
+            }
+        }
+    </script>
+</body>
+</html>
